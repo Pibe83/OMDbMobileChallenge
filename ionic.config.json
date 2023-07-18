@@ -1,0 +1,7 @@
+{
+  "name": "OMDbMobileChallenge",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
