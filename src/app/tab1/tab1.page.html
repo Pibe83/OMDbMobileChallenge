@@ -1,17 +1,39 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Ionic Movie App
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="container">
+    <ion-segment [(ngModel)]="selectedSegment" (ionChange)="segmentChanged()">
+      <ion-segment-button value="movies">
+        Movies
+      </ion-segment-button>
+      <ion-segment-button value="series">
+        Series
+      </ion-segment-button>
+    </ion-segment>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+    <ion-item>
+      <ion-label>Termine di Ricerca</ion-label>
+      <ion-input type="text" [(ngModel)]="searchTerm" (ionChange)="filterMediaList()"></ion-input>
+    </ion-item>
+
+    <div class="row">
+      <div class="col-2" *ngFor="let media of filteredMediaList">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ media.Title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-img [src]="media.Poster" alt="{{ media.Title }}"></ion-img>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </div>
 </ion-content>
+
