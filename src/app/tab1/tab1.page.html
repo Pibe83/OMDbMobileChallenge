@@ -22,20 +22,32 @@
       <ion-input type="text" [(ngModel)]="searchTerm" (ionChange)="filterMediaList()"></ion-input>
     </ion-item>
 
+    <!-- Aggiungi il campo di selezione per il criterio di ordinamento -->
+    <ion-item>
+      <ion-label>Criterio di Ordinamento</ion-label>
+      <ion-select [(ngModel)]="selectedSortCriteria" (ionChange)="onSortChange($event)">
+        <ion-select-option *ngFor="let option of sortCriteriaOptions" [value]="option">
+          {{ option }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
     <div class="row">
+      <!-- Utilizza il nuovo elenco di film filtrato per visualizzare i risultati -->
       <div class="col-2" *ngFor="let media of (filteredMediaList.length === 0 ? groupedMediaList : filteredMediaList)">
         <ion-card>
           <ion-card-header>
             <ion-card-title>{{ media.Title }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <ion-img [src]="media.Poster" alt="{{ media.Title }}" class="img-fluid"></ion-img>
+            <ion-img [src]="media.Poster" alt="{{ media.Title }}"></ion-img>
           </ion-card-content>
         </ion-card>
       </div>
     </div>
   </div>
 </ion-content>
+
 
 
 
