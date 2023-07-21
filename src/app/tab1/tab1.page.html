@@ -31,22 +31,23 @@
         </ion-select-option>
       </ion-select>
     </ion-item>
+  </div>
 
-    <div class="row">
-      <!-- Utilizza il nuovo elenco di film filtrato per visualizzare i risultati -->
-      <div class="col-2" *ngFor="let media of (filteredMediaList.length === 0 ? groupedMediaList : filteredMediaList)">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>{{ media.Title }}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-img [src]="media.Poster" alt="{{ media.Title }}"></ion-img>
-          </ion-card-content>
-        </ion-card>
-      </div>
+  <div class="row">
+    <!-- Utilizza il nuovo elenco di film filtrato per visualizzare i risultati -->
+    <div class="col-2" *ngFor="let media of (filteredMediaList.length === 0 ? groupedMediaList : filteredMediaList)">
+      <ion-card (click)="navigateToDetailsPage(media.imdbID)">
+        <ion-card-header>
+          <ion-card-title>{{ media.Title }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-img [src]="media.Poster" alt="{{ media.Title }}"></ion-img>
+        </ion-card-content>
+      </ion-card>
     </div>
   </div>
 </ion-content>
+
 
 
 

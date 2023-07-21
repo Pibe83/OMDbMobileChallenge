@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -12,12 +13,11 @@ export class Tab1Page implements OnInit {
   groupedMediaList: any[] = [];
   searchTerm: string = '';
   filteredMediaList: any[] = [];
+  selectedSortCriteria: string = 'Year'; // Aggiungi la proprietà selectedSortCriteria
 
-  // Aggiungi queste due proprietà
-  selectedSortCriteria: string = ''; // Criterio di ordinamento selezionato dall'utente
-  sortCriteriaOptions: string[] = ['Anno', 'Alfabetico', 'Valutazione']; // Opzioni di ordinamento disponibili
+  sortCriteriaOptions: string[] = ['Year', 'Title', 'imdbRating']; // Opzioni per il campo di selezione di ordinamento
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
     this.getRandomMediaList();
@@ -28,6 +28,7 @@ export class Tab1Page implements OnInit {
     const apiUrl = 'http://www.omdbapi.com/';
     const randomMovieIds = ['tt0111161', 'tt0468569', 'tt1375666', 'tt0137523', 'tt0120737', 'tt0167260', 'tt0133093', 'tt0172495'];
 
+    // Effettua una chiamata all'API per ottenere i dati dei film casuali
     randomMovieIds.forEach(movieId => {
       let params = new HttpParams();
       params = params.append('apikey', apiKey);
@@ -78,28 +79,6 @@ export class Tab1Page implements OnInit {
     }
 
     this.groupedMediaList = this.chunkArray(this.filteredMediaList, 5);
-
-    // Applica l'ordinamento dopo aver filtrato l'elenco
-    this.sortMediaList();
-  }
-
-  // Metodo per ordinare l'elenco dei film o serie
-  sortMediaList() {
-    switch (this.selectedSortCriteria) {
-      case 'Anno':
-        this.filteredMediaList.sort((a, b) => (a.Year > b.Year ? 1 : -1));
-        break;
-      case 'Alfabetico':
-        this.filteredMediaList.sort((a, b) => a.Title.localeCompare(b.Title));
-        break;
-      case 'Valutazione':
-        this.filteredMediaList.sort((a, b) => (a.imdbRating < b.imdbRating ? 1 : -1));
-        break;
-      default:
-        break;
-    }
-
-    this.groupedMediaList = this.chunkArray(this.filteredMediaList, 5);
   }
 
   chunkArray(arr: any[], chunkSize: number): any[] {
@@ -114,12 +93,15 @@ export class Tab1Page implements OnInit {
     this.getMediaList();
   }
 
-  // Metodo chiamato quando l'utente seleziona un nuovo criterio di ordinamento
   onSortChange(event: any) {
-    this.sortMediaList();
+    this.filterMediaList();
+  }
+
+  // Funzione per il reindirizzamento alla pagina Dettagli
+  navigateToDetailsPage(mediaId: string) {
+    this.router.navigateByUrl(`/dettagli/${mediaId}`);
   }
 }
-
 
 
 
