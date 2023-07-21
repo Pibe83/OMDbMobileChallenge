@@ -23,17 +23,19 @@
     </ion-item>
 
     <div class="row">
-      <div class="col-2" *ngFor="let media of filteredMediaList">
+      <div class="col-2" *ngFor="let media of (filteredMediaList.length === 0 ? groupedMediaList : filteredMediaList)">
         <ion-card>
           <ion-card-header>
             <ion-card-title>{{ media.Title }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <ion-img [src]="media.Poster" alt="{{ media.Title }}"></ion-img>
+            <ion-img [src]="media.Poster" alt="{{ media.Title }}" class="img-fluid"></ion-img>
           </ion-card-content>
         </ion-card>
       </div>
     </div>
   </div>
 </ion-content>
+
+
 
