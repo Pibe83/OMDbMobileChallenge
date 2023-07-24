@@ -1,52 +1,60 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Ionic Movie App
-    </ion-title>
+    <ion-img src="../../assets/icon/movie.png" class="logo"></ion-img>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="container">
+
+    <!-- Prima search bar -->
+    <div class="search-bar">
+      <ion-item class="search-item">
+        <ion-label class="fw-bold text-blu">Search film</ion-label>
+        <ion-input type="text" [(ngModel)]="searchTerm" (ionChange)="filterMediaList()" class="search-input"></ion-input>
+      </ion-item>
+    </div>
+
+    <!-- Seconda search bar -->
+    <div class="search-bar">
+      <ion-item class="sort-item">
+        <ion-label class="fw-bold text-blu">Sort by</ion-label>
+        <ion-select [(ngModel)]="selectedSortCriteria" (ionChange)="onSortChange($event)" class="sort-select">
+          <ion-select-option *ngFor="let option of sortCriteriaOptions" [value]="option">
+            {{ option }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+    <!-- Resto del contenuto -->
     <ion-segment [(ngModel)]="selectedSegment" (ionChange)="segmentChanged()">
-      <ion-segment-button value="movies">
+      <ion-segment-button value="movies" class="bounce-top mt-5">
         Movies
       </ion-segment-button>
-      <ion-segment-button value="series">
+      <ion-segment-button value="series" class="bounce-top mt-5">
         Series
       </ion-segment-button>
     </ion-segment>
 
-    <ion-item>
-      <ion-label>Termine di Ricerca</ion-label>
-      <ion-input type="text" [(ngModel)]="searchTerm" (ionChange)="filterMediaList()"></ion-input>
-    </ion-item>
-
-    <!-- Aggiungi il campo di selezione per il criterio di ordinamento -->
-    <ion-item>
-      <ion-label>Criterio di Ordinamento</ion-label>
-      <ion-select [(ngModel)]="selectedSortCriteria" (ionChange)="onSortChange($event)">
-        <ion-select-option *ngFor="let option of sortCriteriaOptions" [value]="option">
-          {{ option }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-  </div>
-
-  <div class="row">
-    <!-- Utilizza il nuovo elenco di film filtrato per visualizzare i risultati -->
-    <div class="col-2" *ngFor="let media of (filteredMediaList.length === 0 ? groupedMediaList : filteredMediaList)">
-      <ion-card (click)="navigateToDetailsPage(media.imdbID)">
-        <ion-card-header>
-          <ion-card-title>{{ media.Title }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-img [src]="media.Poster" alt="{{ media.Title }}"></ion-img>
-        </ion-card-content>
-      </ion-card>
+    <!-- Utilizziamo *ngFor per ciclare sui film e generare dinamicamente le card con l'effetto desiderato -->
+    <div class="row mt-5">
+      <div class="col-3" *ngFor="let media of (filteredMediaList.length === 0 ? groupedMediaList : filteredMediaList)">
+        <figure class="snip1545">
+          <img [src]="media.Poster" alt="{{ media.Title }}" />
+          <figcaption>
+            <div><i class="ion-eye"></i></div>
+          </figcaption>
+          <!-- Aggiungi routerLink per reindirizzare alla pagina dei dettagli -->
+          <a [routerLink]="['/dettagli', media.imdbID]"></a>
+        </figure>
+      </div>
     </div>
   </div>
 </ion-content>
+
+
+
 
 
 

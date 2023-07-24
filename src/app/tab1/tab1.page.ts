@@ -1,34 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ThemeService } from '../theme.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
 })
-export class Tab1Page implements OnInit {
+export class Tab1Page implements OnInit, OnDestroy {
   selectedSegment = 'movies';
   mediaList: any[] = [];
   groupedMediaList: any[] = [];
   searchTerm: string = '';
   filteredMediaList: any[] = [];
-  selectedSortCriteria: string = 'Year'; // Aggiungi la proprietà selectedSortCriteria
+  selectedSortCriteria: string = 'Year';
 
-  sortCriteriaOptions: string[] = ['Year', 'Title', 'imdbRating']; // Opzioni per il campo di selezione di ordinamento
+  sortCriteriaOptions: string[] = ['Year', 'Title', 'imdbRating'];
 
-  constructor(private http: HttpClient, private router: Router) {}
+  private darkModeSubscription!: Subscription;
+  isDarkMode: boolean = false;
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private themeService: ThemeService
+  ) {}
 
   ngOnInit() {
+    this.darkModeSubscription = this.themeService.isDarkMode.subscribe((value) => {
+      this.isDarkMode = value;
+    });
     this.getRandomMediaList();
+  }
+
+  ngOnDestroy() {
+    this.darkModeSubscription.unsubscribe();
   }
 
   getRandomMediaList() {
     const apiKey = '893e80b9';
     const apiUrl = 'http://www.omdbapi.com/';
-    const randomMovieIds = ['tt0111161', 'tt0468569', 'tt1375666', 'tt0137523', 'tt0120737', 'tt0167260', 'tt0133093', 'tt0172495'];
+    const randomMovieIds = ['tt0111161', 'tt0468569', 'tt1375666', 'tt0137523', 'tt0120737', 'tt0167260', 'tt0133093', 'tt0172495', 'tt1375666','tt0111161', 'tt0468569', 'tt1375666'];
 
-    // Effettua una chiamata all'API per ottenere i dati dei film casuali
     randomMovieIds.forEach(movieId => {
       let params = new HttpParams();
       params = params.append('apikey', apiKey);
@@ -97,11 +112,11 @@ export class Tab1Page implements OnInit {
     this.filterMediaList();
   }
 
-  // Funzione per il reindirizzamento alla pagina Dettagli
+  toggleTheme() {
+    this.themeService.setDarkMode(!this.isDarkMode);
+  }
+
   navigateToDetailsPage(mediaId: string) {
     this.router.navigateByUrl(`/dettagli/${mediaId}`);
   }
 }
-
-
-

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-dettagli',
@@ -11,7 +12,11 @@ export class DettagliPage implements OnInit {
   movieId: string = '';
   movieDetails: any = {};
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private navCtrl: NavController
+  ) {}
 
   ngOnInit() {
     // Recupera l'ID del film o della serie dalla route attuale
@@ -30,7 +35,12 @@ export class DettagliPage implements OnInit {
       this.movieDetails = response; // Assegna i dettagli ottenuti dall'API alla proprietà movieDetails
     });
   }
+
+  goBackToTab1() {
+    this.navCtrl.navigateBack('/tabs/tab1');
+  }
 }
+
 
 
 
