@@ -1,35 +1,68 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title class="fw-bold">Details</ion-title>
-  </ion-toolbar>
-</ion-header>
+<nav class="navbar navbar-expand-md navbar-white bg-white">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="../../assets/icon/movie.png" alt="Logo" class="logo">
+    </a>
 
-<ion-content>
-  <ion-card *ngIf="movieDetails">
-    <ion-grid>
-      <ion-row>
-        <ion-col size="12" size-md="4">
-          <ion-img [src]="movieDetails.Poster" alt="{{ movieDetails.Title }}"></ion-img>
-          <ion-button class="back-button heartbeat" (click)="goBackToTab1()" fill="clear" color="primary">
-            Home
-          </ion-button>
-        </ion-col>
-        <ion-col size="12" size-md="8">
-          <ion-card-header>
-            <ion-card-title>{{ movieDetails.Title }}</ion-card-title>
-          </ion-card-header>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-          <ion-card-content>
-            <p><strong>Anno:</strong> {{ movieDetails.Year }}</p>
-            <p><strong>Genere:</strong> {{ movieDetails.Genre }}</p>
-            <p><strong>Regista:</strong> {{ movieDetails.Director }}</p>
-            <p><strong>Valutazione:</strong> {{ movieDetails.imdbRating }}</p>
-            <p><strong>Trama:</strong> {{ movieDetails.Plot }}</p>
-          </ion-card-content>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+<ion-content class="content mt-5">
+  <div class="card-container">
+    <div class="card" style="width: 18rem;">
+      <ion-img [src]="movieDetails.Poster" alt="{{ movieDetails.Title }}" class="card-img-top"></ion-img>
+      <div class="card-body">
+        <h4 class="card-title">{{ movieDetails.Title }} ({{ movieDetails.Year }})</h4>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4 metadata">
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <p>{{ movieDetails.imdbRating }}/10</p>
+            </div>
+            <div class="col-sm-8 metadata">{{ movieDetails.Genre }}</div>
+          </div>
+        </div>
+
+        <p class="card-text">{{ movieDetails.Plot }}</p>
+        <a class="trailer-preview" [href]="movieDetails.TrailerLink" target="_blank">
+          <i class="fa fa-play" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dummy-content">
+    
+  </div>
+
+
+  <ion-button class="back-button heartbeat" (click)="goBackToTab1()" fill="clear" color="primary">
+    Home
+  </ion-button>
 </ion-content>
+
+
+
+
 
 

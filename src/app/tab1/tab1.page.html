@@ -1,8 +1,32 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-img src="../../assets/icon/movie.png" class="logo"></ion-img>
-  </ion-toolbar>
-</ion-header>
+<nav class="navbar navbar-expand-md navbar-white bg-white">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="../../assets/icon/movie.png" alt="Logo" class="logo">
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
 
 <ion-content>
   <div class="container">
@@ -37,7 +61,7 @@
       </ion-segment-button>
     </ion-segment>
 
-    <!-- Utilizziamo *ngFor per ciclare sui film e generare dinamicamente le card con l'effetto desiderato -->
+    <!-- Utilizzo *ngFor per ciclare sui film e generare dinamicamente le card con l'effetto desiderato -->
     <div class="row mt-5">
       <div class="col-3" *ngFor="let media of (filteredMediaList.length === 0 ? groupedMediaList : filteredMediaList)">
         <figure class="snip1545">
@@ -45,13 +69,20 @@
           <figcaption>
             <div><i class="ion-eye"></i></div>
           </figcaption>
-          <!-- Aggiungi routerLink per reindirizzare alla pagina dei dettagli -->
+          <!-- Aggiungo routerLink per reindirizzare alla pagina dei dettagli -->
           <a [routerLink]="['/dettagli', media.imdbID]"></a>
         </figure>
       </div>
     </div>
   </div>
+  <div class="dummy-content">
+    
+  </div>
+
 </ion-content>
+
+
+
 
 
 
